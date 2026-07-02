@@ -1,0 +1,95 @@
+// Toggle Nav Menu on Mobile Devices
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+
+hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+    const icon = hamburger.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-xmark');
+});
+
+// Light/Dark Theme Switcher Logic
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
+
+// Check user's preferred browser layout mode or saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    body.classList.add(savedTheme);
+    updateThemeIcon();
+}
+
+themeToggle.addEventListener('click', () => {
+    if (body.classList.contains('dark-theme')) {
+        body.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light-theme');
+    } else {
+        body.classList.add('dark-theme');
+        localStorage.setItem('theme', 'dark-theme');
+    }
+    updateThemeIcon();
+});
+
+function updateThemeIcon() {
+    const icon = themeToggle.querySelector('i');
+    if (body.classList.contains('dark-theme')) {
+        icon.classList.replace('fa-moon', 'fa-sun');
+    } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+    }
+}
+
+// Back to Top Button Control
+const backToTopBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
+    } else {
+        backToTopBtn.classList.remove('show');
+    }
+});
+
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Accordion Trigger for FAQ Page
+const faqQuestions = document.querySelectorAll('.faq-question');
+
+faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+        const item = question.parentElement;
+        item.classList.toggle('active');
+        
+        // Change icon indicator
+        const icon = question.querySelector('i');
+        if (item.classList.contains('active')) {
+            icon.classList.replace('fa-plus', 'fa-minus');
+        } else {
+            icon.classList.replace('fa-minus', 'fa-plus');
+        }
+    });
+});
+
+// Basic Audit Form Handling & Mock Success Notification
+const auditForm = document.getElementById('seoAuditForm');
+const formSuccess = document.getElementById('formSuccess');
+
+auditForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Process form inputs securely (Mock action)
+    const nameVal = document.getElementById('name').value;
+    const emailVal = document.getElementById('email').value;
+    const websiteVal = document.getElementById('website').value;
+    
+    if (nameVal && emailVal && websiteVal) {
+        auditForm.classList.add('hide');
+        formSuccess.classList.remove('hide');
+    }
+});
